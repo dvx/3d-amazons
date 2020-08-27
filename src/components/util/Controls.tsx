@@ -12,25 +12,21 @@ declare global {
 }
 
 interface OrbitRef {
-  obj: {
-      update: Function;
-  };
+  update: Function;
 }
 
 const Controls = (props: any) => {
   const ref = useRef<OrbitRef>();
-  const { camera, gl } = useThree();
+  const { camera, gl: { domElement } } = useThree();
   useFrame(() => {
-      if (ref && ref.current) {
-          ref.current.obj?.update();
-      }
+    ref?.current?.update();
   });
   return (
-      <orbitControls
-          ref={ ref }
-          args={ [ camera, gl.domElement ] }
-          { ...props }
-      />
+    <orbitControls
+      ref={ ref }
+      args={ [ camera, domElement ] }
+      { ...props }
+    />
   );
 };
 

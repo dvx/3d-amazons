@@ -40,7 +40,7 @@ ReactDOM.render(
     <Controls
       enablePan={false}
       enableDamping
-      dampingFactor={0.5}
+      damping={0.5}
       rotateSpeed={0.35}
       target={[ 3, 3, 3 ]}
     />
