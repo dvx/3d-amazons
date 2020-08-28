@@ -1,10 +1,10 @@
-const FadeShader = {
+import * as THREE from "three";
+
+const StarNest = {
     uniforms: {
-      effectFactor: { type: "f", value: 1.2 },
-      dispFactor: { type: "f", value: 0 },
-      texture: { type: "t", value: undefined },
-      texture2: { type: "t", value: undefined },
-      disp: { type: "t", value: undefined }
+      iTime: { type: 'f', value: 0 },
+      iResolution: { type: 'v3', value: new THREE.Vector3() },
+      iMouse: { type: 'v3', value: new THREE.Vector3() },
     },
     vertexShader: `
       void main() {
@@ -12,6 +12,11 @@ const FadeShader = {
       }
     `,
     fragmentShader: `
+
+      uniform vec3 iResolution;
+      uniform vec3 iMouse;
+      uniform float iTime;
+      
       // Star Nest by Pablo RomÃ¡n Andrioli
 
       // This content is under the MIT License.
@@ -112,5 +117,5 @@ const FadeShader = {
     `
   };
   
-  export { FadeShader };
+  export { StarNest };
   
