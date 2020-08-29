@@ -10,13 +10,13 @@ const Main = (props: any) => {
   const { size, setDefaultCamera } = useThree()
   useEffect(() => void setDefaultCamera(camera.current), [])
   useFrame(() => camera.current.updateMatrixWorld())
-    
+
   return(
     <>
       <perspectiveCamera
         ref={camera}
         aspect={size.width / size.height}
-        onUpdate={self => self.updateProjectionMatrix()}
+        onUpdate={(self: { updateProjectionMatrix: () => any }) => self.updateProjectionMatrix()}
       />
     <Nebula />
     <Grid />
@@ -25,3 +25,4 @@ const Main = (props: any) => {
 }
 
 export default Main;
+

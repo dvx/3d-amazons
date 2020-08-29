@@ -2,7 +2,6 @@ import React, { useRef, useEffect } from "react";
 import { useThree, useFrame, Camera } from "react-three-fiber";
 import * as THREE from "three";
 import { OrthographicCamera } from "three";
-import { Tiedye } from "../../shaders/Tiedye";
 import { StarNest } from "../../shaders/StarNest";
 
 function Plane(props: any) {
@@ -10,9 +9,10 @@ function Plane(props: any) {
   const mesh = useRef<THREE.Mesh>();
   const { size } = useThree();
   let time = 0;
-  useFrame(({ gl }) => {
+  useFrame(({ camera }) => {
     time+= 0.1;
-    StarNest.uniforms.iMouse.value.set(0, 0, 1);
+    console.log(Math.abs(Math.sin(camera.rotation.x + camera.rotation.z)), Math.abs(Math.sin(camera.rotation.y)))
+    StarNest.uniforms.iMouse.value.set(Math.abs(Math.sin(camera.rotation.x + camera.rotation.z)), Math.abs(Math.sin(camera.rotation.y)), 1);
     StarNest.uniforms.iResolution.value.set(size.width, size.height, 1);
     StarNest.uniforms.iTime.value = time;
   })
@@ -23,7 +23,7 @@ function Plane(props: any) {
       ref={mesh}>
       <planeBufferGeometry attach="geometry" args={[1, 1, 1]}/>
       <meshStandardMaterial attach="material" color={'#aacc33'}  />
-      <shaderMaterial attach="material" uniforms={StarNest.uniforms} vertexShader={StarNest.vertexShader} fragmentShader={StarNest.fragmentShader} />      
+      <shaderMaterial attach="material" uniforms={StarNest.uniforms} vertexShader={StarNest.vertexShader} fragmentShader={StarNest.fragmentShader} />
     </mesh>
   )
 }
