@@ -11,7 +11,6 @@ function Plane(props: any) {
   let time = 0;
   useFrame(({ camera }) => {
     time+= 0.1;
-    console.log(Math.abs(Math.sin(camera.rotation.x + camera.rotation.z)), Math.abs(Math.sin(camera.rotation.y)))
     StarNest.uniforms.iMouse.value.set(Math.abs(Math.sin(camera.rotation.x + camera.rotation.z)), Math.abs(Math.sin(camera.rotation.y)), 1);
     StarNest.uniforms.iResolution.value.set(size.width, size.height, 1);
     StarNest.uniforms.iTime.value = time;

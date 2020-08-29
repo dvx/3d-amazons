@@ -1,6 +1,7 @@
 import React, { useRef, Suspense } from "react";
-import { useLoader } from "react-three-fiber";
+import { useLoader, useFrame } from "react-three-fiber";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import * as THREE from "three";
 
 function Loading() {
   return (
@@ -19,18 +20,21 @@ function Loading() {
 }
 
 function ArWing() {
-  const group = useRef();
-  const { nodes } = useLoader(GLTFLoader, "models/arwing.glb");
+  const group = useRef<THREE.Group>(new THREE.Group());
+  const model = useLoader(GLTFLoader, "models/Trident-A10.glb");
+
+  // cleaning up model
+  model.scene.rotateX(- Math.PI / 2)
+  model.scene.translateY(.35);
+  //model.scene.rotateZ(Math.PI / 2)
+  
+  useFrame(()=> {
+    //group.current.rotation.x += 0.0;
+  })
+
   return (
     <group ref={group}>
-      <mesh visible geometry={nodes.Default.geometry}>
-        <meshStandardMaterial
-          attach="material"
-          color="white"
-          roughness={0.3}
-          metalness={0.3}
-        />
-      </mesh>
+      <primitive onPointerOver={() => console.log('hover!')} scale={[0.0005, 0.0005,0.0005]} object={model.scene} />
     </group>
   );
 }

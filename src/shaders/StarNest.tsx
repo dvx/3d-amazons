@@ -67,7 +67,8 @@ const StarNest = {
           dir.xz*=rot1;
           dir.xy*=rot2;
           vec3 from=vec3(1.,.5,0.5);
-          from+=vec3(time*2.,time,-2.);
+          //from+=vec3(sin(time)*2.,sin(time)*2.,-2.);
+          from+=vec3( (sin(iTime * 0.01) + 1.) * .005, cos(iTime* 0.01) * .005,-2.);
           from.xz*=rot1;
           from.xy*=rot2;
           
