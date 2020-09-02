@@ -56,8 +56,8 @@ const Grid = (props: any) => {
       <Bounds />
       <ambientLight />
       <pointLight position={[10, 10, 10]} />
-      <Ship />
       {[...Array(DIMS)].map((e, i) => [...Array(DIMS)].map((ee, ii) => [...Array(DIMS)].map((eee, iii) => <Box key={i + ii + iii} position={[i * SPACING, ii * SPACING, iii * SPACING]} />)))}
+      <Ship />
     </scene>
   );
 }

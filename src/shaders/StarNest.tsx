@@ -23,10 +23,10 @@ const StarNest = {
       
       // Original post by Kali https://www.shadertoy.com/view/XlfGRj
       
-      #define iterations 15
+      #define iterations 16
       #define formuparam 0.53
       
-      #define volsteps 20
+      #define volsteps 4
       #define stepsize 0.1
       
       #define zoom       0.800

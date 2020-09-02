@@ -1,7 +1,8 @@
-import React, { useRef, Suspense } from "react";
+import React, { useRef, Suspense, useState } from "react";
 import { useLoader, useFrame } from "react-three-fiber";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import * as THREE from "three";
+import useConstructor from "../util/UseConstructor";
 
 function Loading() {
   return (
@@ -19,22 +20,34 @@ function Loading() {
   );
 }
 
-function ArWing() {
+function TridentA10() {
   const group = useRef<THREE.Group>(new THREE.Group());
   const model = useLoader(GLTFLoader, "models/Trident-A10.glb");
+  let originalMaterial: THREE.Material | THREE.Material[];
 
   // cleaning up model
-  model.scene.rotateX(- Math.PI / 2)
-  model.scene.translateY(.35);
+  //model.scene.rotateX(- Math.PI / 2)
+  //model.scene.translateY(.35);
   //model.scene.rotateZ(Math.PI / 2)
+
+  useConstructor(() => {
+    model.scene.rotateX(- Math.PI / 2)
+    model.scene.translateY(.35);
+  })
+
+  const [hovered, setHover] = useState(false)
   
   useFrame(()=> {
-    //group.current.rotation.x += 0.0;
+    //@ts-ignore
+    if (hovered) (model.scene.children[0] as THREE.Mesh).material.emissive.g = 0.25;
+
+    //@ts-ignore
+    else (model.scene.children[0] as THREE.Mesh).material.emissive.g = 0;
   })
 
   return (
     <group ref={group}>
-      <primitive onPointerOver={() => console.log('hover!')} scale={[0.0005, 0.0005,0.0005]} object={model.scene} />
+      <primitive onPointerOver={() => setHover(true)} onPointerOut={() => setHover(false)} scale={[0.0005, 0.0005,0.0005]} object={model.scene} />
     </group>
   );
 }
@@ -42,7 +55,7 @@ function ArWing() {
 const Ship = (props: any) => {
     return(
       <Suspense fallback={<Loading />}>
-        <ArWing />
+        <TridentA10 />
       </Suspense>
     )
 }
