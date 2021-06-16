@@ -3,6 +3,8 @@ import * as THREE from "three";
 import Controls from "../util/Controls";
 import { useFrame, useThree } from "react-three-fiber";
 import Ship from "../actors/Ship";
+import { useGlobalState } from "state-pool";
+import { Game } from "../../game";
 
 const DIMS = 4;
 const SPACING = 2;
@@ -40,6 +42,8 @@ function Bounds(props: any) {
 }
 
 const Grid = (props: any) => {
+  const [gameState, setGameState, updateGameState] = useGlobalState<Game>("game");
+ 
   const scene = useRef<THREE.Scene>(new THREE.Scene())
   const { camera } = useThree()
   useFrame(({ gl }) => void ((gl.autoClear = false), gl.setClearColor('#000000', 0.), gl.render(scene.current, camera)), 100)
@@ -47,11 +51,11 @@ const Grid = (props: any) => {
   return(
     <scene ref={scene}>
       <Controls
-          enablePan={false}
-          enableDamping
-          damping={0.5}
-          rotateSpeed={0.35}
-          target={[ 3, 3, 3 ]}
+        enablePan={false}
+        enableDamping
+        damping={0.5}
+        rotateSpeed={0.35}
+        target={[ 3, 3, 3 ]}
         />
       <Bounds />
       <ambientLight />

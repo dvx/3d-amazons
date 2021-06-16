@@ -3,6 +3,8 @@ import { useLoader, useFrame } from "react-three-fiber";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import * as THREE from "three";
 import useConstructor from "../util/UseConstructor";
+import { useGlobalState } from "state-pool";
+import { Game } from "../../game"
 
 function Loading() {
   return (
@@ -32,14 +34,20 @@ function TridentA10() {
 
   useConstructor(() => {
     model.scene.rotateX(- Math.PI / 2)
-    model.scene.translateY(.35);
+    //model.scene.translateY(.35);
   })
 
   const [hovered, setHover] = useState(false)
+  const [gameState, setGameState, updateGameState] = useGlobalState<Game>("game");
+
   
   useFrame(()=> {
     //@ts-ignore
     if (hovered) (model.scene.children[0] as THREE.Mesh).material.emissive.g = 0.25;
+
+    if (hovered) console.log(gameState)
+
+    if(hovered) updateGameState((gameState => { gameState.turn++ }))
 
     //@ts-ignore
     else (model.scene.children[0] as THREE.Mesh).material.emissive.g = 0;
@@ -47,7 +55,7 @@ function TridentA10() {
 
   return (
     <group ref={group}>
-      <primitive onPointerOver={() => setHover(true)} onPointerOut={() => setHover(false)} scale={[0.0005, 0.0005,0.0005]} object={model.scene} />
+      <primitive onPointerOver={() => setHover(true)} onPointerOut={() => setHover(false)} scale={[0.001, 0.001,0.001]} object={model.scene} />
     </group>
   );
 }

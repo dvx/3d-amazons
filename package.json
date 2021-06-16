@@ -16,6 +16,7 @@
     "react-scripts": "3.4.3",
     "react-three-fiber": "^4.2.20",
     "recoil": "^0.0.10",
+    "state-pool": "^0.4.0",
     "three": "^0.120.0",
     "typescript": "~3.7.2"
   },

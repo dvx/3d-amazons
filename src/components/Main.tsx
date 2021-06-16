@@ -5,6 +5,11 @@ import React from "react"
 import Grid from "./scenes/Grid"
 import Nebula from "./scenes/Nebula"
 
+import { store, useGlobalState } from 'state-pool';
+import { Game } from "../game"
+
+store.setState("game", new Game(4));
+
 const Main = (props: any) => {
   const camera = useRef<Camera>(new PerspectiveCamera())
   const { size, setDefaultCamera } = useThree()
