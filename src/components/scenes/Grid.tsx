@@ -2,11 +2,11 @@ import React, { useRef, useState, useMemo } from "react";
 import * as THREE from "three";
 import Controls from "../util/Controls";
 import { useFrame, useThree } from "react-three-fiber";
-import Ship from "../actors/Ship";
 import { useGlobalState } from "state-pool";
-import { Game } from "../../game";
+import { Game } from "../../game/game";
+import TridentA1 from "../actors/TridentA10";
+import FighterV1 from "../actors/FighterV1";
 
-const DIMS = 4;
 const SPACING = 2;
 
 function Box(props: any) {
@@ -24,6 +24,8 @@ function Box(props: any) {
     <mesh
       {...props}
       ref={mesh}
+      onPointerOver={() => setHover(true)}
+      onPointerOut={() => setHover(false)}
       scale={active ? [1.5, 1.5, 1.5] : [1, 1, 1]} >
       <boxBufferGeometry attach="geometry" args={[1, 1, 1]} />
       <meshStandardMaterial attach="material" transparent color={hovered ? 'hotpink' : '#000'} opacity={0.1} />
@@ -60,8 +62,10 @@ const Grid = (props: any) => {
       <Bounds />
       <ambientLight />
       <pointLight position={[10, 10, 10]} />
-      {[...Array(DIMS)].map((e, i) => [...Array(DIMS)].map((ee, ii) => [...Array(DIMS)].map((eee, iii) => <Box key={i + ii + iii} position={[i * SPACING, ii * SPACING, iii * SPACING]} />)))}
-      <Ship />
+      {gameState?.board.map((cell, i) =>
+        <Box key={i} position={[cell.coords.x * SPACING, cell.coords.y * SPACING, cell.coords.z * SPACING]} />)}
+      <TridentA1 />
+      <FighterV1 />
     </scene>
   );
 }

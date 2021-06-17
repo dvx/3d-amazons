@@ -6,9 +6,10 @@ import Grid from "./scenes/Grid"
 import Nebula from "./scenes/Nebula"
 
 import { store, useGlobalState } from 'state-pool';
-import { Game } from "../game"
+import { Game } from "../game/game"
+import * as constants from "../constants";
 
-store.setState("game", new Game(4));
+store.setState("game", new Game(constants.DIMS));
 
 const Main = (props: any) => {
   const camera = useRef<Camera>(new PerspectiveCamera())
