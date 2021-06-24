@@ -6,6 +6,7 @@ import { useGlobalState } from "state-pool";
 import { Game } from "../../game/game";
 import TridentA1 from "../actors/TridentA10";
 import FighterV1 from "../actors/FighterV1";
+import { NUMBERING } from "../../constants";
 
 const SPACING = 2;
 
@@ -24,7 +25,10 @@ function Box(props: any) {
     <mesh
       {...props}
       ref={mesh}
-      onPointerOver={() => setHover(true)}
+      onPointerOver={() => {
+        setHover(true);
+        console.log(props.name);
+      }}
       onPointerOut={() => setHover(false)}
       scale={active ? [1.5, 1.5, 1.5] : [1, 1, 1]} >
       <boxBufferGeometry attach="geometry" args={[1, 1, 1]} />
@@ -63,7 +67,9 @@ const Grid = (props: any) => {
       <ambientLight />
       <pointLight position={[10, 10, 10]} />
       {gameState?.board.map((cell, i) =>
-        <Box key={i} position={[cell.coords.x * SPACING, cell.coords.y * SPACING, cell.coords.z * SPACING]} />)}
+        <Box key={i} cell={cell} name={
+          NUMBERING[4][cell.coords.x] + "-" + NUMBERING[3][cell.coords.y]  + "-" + NUMBERING[1][cell.coords.z]
+          } position={[cell.coords.x * SPACING, cell.coords.y * SPACING, cell.coords.z * SPACING]} />)}
       <TridentA1 />
       <FighterV1 />
     </scene>

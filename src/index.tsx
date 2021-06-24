@@ -4,8 +4,12 @@ import { Canvas } from 'react-three-fiber'
 import './styles.css'
 import Main from './components/Main'
 
+function intersectionsFilter(intersections: THREE.Intersection[]): THREE.Intersection[] {
+  return intersections?.length ? [intersections[0]] : intersections;
+}
+
 ReactDOM.render(
-  <Canvas gl={{ antialias: true, alpha: true }} >
+  <Canvas gl={{ antialias: true, alpha: true }} raycaster={{ filter: intersectionsFilter }}>
     <Main />
   </Canvas>,
   document.getElementById('root')
